@@ -403,13 +403,13 @@ function removeFromMap<T>(map: Map<string, T>, key: ts.__String): T|undefined {
   return value;
 }
 
-function isPropertyAccess(node: ts.Node):
-    node is ts.PropertyAccessExpression&{parent: ts.BinaryExpression} {
+function isPropertyAccess(node: ts.Node): node is ts.PropertyAccessExpression&
+    {parent: ts.BinaryExpression} {
   return !!node.parent && ts.isBinaryExpression(node.parent) && ts.isPropertyAccessExpression(node);
 }
 
-function isThisAssignment(node: ts.Declaration):
-    node is ts.BinaryExpression&{left: ts.PropertyAccessExpression} {
+function isThisAssignment(node: ts.Declaration): node is ts.BinaryExpression&
+    {left: ts.PropertyAccessExpression} {
   return ts.isBinaryExpression(node) && ts.isPropertyAccessExpression(node.left) &&
       node.left.expression.kind === ts.SyntaxKind.ThisKeyword;
 }
@@ -419,7 +419,7 @@ function isNamedDeclaration(node: ts.Declaration): node is ts.NamedDeclaration {
 }
 
 
-function isClassMemberType(node: ts.Declaration):
-    node is ts.ClassElement|ts.PropertyAccessExpression|ts.BinaryExpression {
+function isClassMemberType(node: ts.Declaration): node is ts.ClassElement|
+    ts.PropertyAccessExpression|ts.BinaryExpression {
   return ts.isClassElement(node) || isPropertyAccess(node) || ts.isBinaryExpression(node);
 }
