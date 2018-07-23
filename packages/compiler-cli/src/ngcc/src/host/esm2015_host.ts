@@ -130,7 +130,7 @@ export class Esm2015ReflectionHost extends TypeScriptReflectionHost implements N
     // Deal with any decorated properties that were not initialized in the class
     decoratorsMap.forEach((value, key) => {
       members.push({
-        declaration: null,
+        implementation: null,
         decorators: value,
         isStatic: false,
         kind: ClassMemberKind.Property,
@@ -316,7 +316,7 @@ export class Esm2015ReflectionHost extends TypeScriptReflectionHost implements N
 
     return {
       node,
-      declaration: node, kind, type, name, nameNode, value, isStatic,
+      implementation: node, kind, type, name, nameNode, value, isStatic,
       decorators: decorators || []
     };
   }

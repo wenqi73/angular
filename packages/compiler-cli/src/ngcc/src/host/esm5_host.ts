@@ -99,10 +99,10 @@ export class Esm5ReflectionHost extends Esm2015ReflectionHost {
         ts.isBinaryExpression(member.node.parent) &&
         ts.isFunctionExpression(member.node.parent.right)) {
       debugger;
-      // recompute the declaration for this member, since ES5 static methods are variable
-      // declarations
-      // so the declaration is actually the initialzer of the variable assignment
-      member.declaration = member.node.parent.right;
+      // Recompute the implementation for this member:
+      // ES5 static methods are variable declarations so the declaration is actually the
+      // initializer of the variable assignment
+      member.implementation = member.node.parent.right;
     }
     return member;
   }

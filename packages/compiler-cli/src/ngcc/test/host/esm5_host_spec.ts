@@ -575,7 +575,7 @@ describe('Esm5ReflectionHost', () => {
       const instanceProperty = members.find(member => member.name === 'instanceProperty') !;
       expect(instanceProperty.kind).toEqual(ClassMemberKind.Property);
       expect(instanceProperty.isStatic).toEqual(false);
-      expect(ts.isBinaryExpression(instanceProperty.declaration !)).toEqual(true);
+      expect(ts.isBinaryExpression(instanceProperty.implementation !)).toEqual(true);
       expect(instanceProperty.value !.getText()).toEqual(`'instance'`);
     });
 
@@ -590,7 +590,7 @@ describe('Esm5ReflectionHost', () => {
       const staticMethod = members.find(member => member.name === 'staticMethod') !;
       expect(staticMethod.kind).toEqual(ClassMemberKind.Method);
       expect(staticMethod.isStatic).toEqual(true);
-      expect(ts.isFunctionExpression(staticMethod.declaration !)).toEqual(true);
+      expect(ts.isFunctionExpression(staticMethod.implementation !)).toEqual(true);
     });
 
     it('should find static properties on a class', () => {
@@ -603,7 +603,7 @@ describe('Esm5ReflectionHost', () => {
       const staticProperty = members.find(member => member.name === 'staticProperty') !;
       expect(staticProperty.kind).toEqual(ClassMemberKind.Property);
       expect(staticProperty.isStatic).toEqual(true);
-      expect(ts.isPropertyAccessExpression(staticProperty.declaration !)).toEqual(true);
+      expect(ts.isPropertyAccessExpression(staticProperty.implementation !)).toEqual(true);
       expect(staticProperty.value !.getText()).toEqual(`'static'`);
     });
 
