@@ -253,7 +253,8 @@ const UNARY_OPERATORS = new Map<ts.SyntaxKind, (a: any) => any>([
 interface Context {
   absoluteModuleName: string|null;
   scope: Scope;
-  foreignFunctionResolver?(node: ts.FunctionDeclaration|ts.MethodDeclaration|ts.FunctionExpression): ts.Expression|null;
+  foreignFunctionResolver?
+      (node: ts.FunctionDeclaration|ts.MethodDeclaration|ts.FunctionExpression): ts.Expression|null;
 }
 
 class StaticInterpreter {
