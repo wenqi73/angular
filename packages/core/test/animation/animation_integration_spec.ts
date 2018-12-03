@@ -2456,6 +2456,71 @@ const DEFAULT_COMPONENT_ID = '1';
         const players = getLog();
         expect(players.length).toEqual(2);
       });
+
+      fit('24041',
+        () => {
+          @Component({
+            selector: 'example-app',
+            template: `
+              <content [display]="display">
+                <span *ngFor="let i of listOfOption" [@tagAnimation]>{{i}}</span>
+              </content>
+            `,
+            animations: [
+              trigger('tagAnimation', [
+                transition('void => *', [
+                  animate('150ms linear', style({ opacity: 1 }))
+                ]),
+                transition('* => void', [
+                  animate('150ms linear', style({ opacity: 0 }))
+                ])
+              ])
+            ]
+          })
+          class Cmp {
+            constructor() { }
+            display = true;
+            listOfOption = [1,2,3];
+          }
+          
+          @Component({
+            selector: 'content',
+              animations         : [
+              trigger('dropDownAnimation', [
+              ])
+            ],
+            template: `
+            <div [@dropDownAnimation] *ngIf="display">
+              <ng-content></ng-content>
+            </div>
+            `,
+            styles: [`h1 { font-family: Lato; }`]
+          })
+          class ContentCmp {
+            @Input() display = false;
+          }
+
+          TestBed.configureTestingModule({ declarations: [Cmp, ContentCmp] });
+
+          const engine = TestBed.get(ɵAnimationEngine);
+          const fixture = TestBed.createComponent(Cmp);
+          const cmp = fixture.componentInstance;
+          cmp.display = false;
+
+          fixture.detectChanges();
+          engine.flush();
+
+          cmp.display = false;
+
+          fixture.detectChanges();
+          engine.flush();
+
+          expect(getLog().length).toEqual(1);
+          expect(getLog().pop() !.keyframes).toEqual([
+            {offset: 0, opacity: '0'}, {offset: 1, opacity: '1'}
+          ]);
+
+      });
     });
 
     describe('animation listeners', () => {
